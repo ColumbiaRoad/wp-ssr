@@ -1,0 +1,40 @@
+{
+  "name": "wp-ssr",
+  "version": "0.1.0",
+  "description": "Server-side rendering for JavScript apps inside WordPress templates.",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "lint:php": "vendor/bin/phpcs --standard=phpcs.xml",
+    "lint:js": "eslint server.js lib/**",
+    "lint": "npm run lint:php && npm run lint:js",
+    "test": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roopemerikukka/wp-ssr.git"
+  },
+  "author": "Roope Merikukka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roopemerikukka/wp-ssr/issues"
+  },
+  "homepage": "https://github.com/roopemerikukka/wp-ssr#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jsdom": "^16.1.0",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.2",
+    "puppeteer": "^2.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-node": "^11.0.0",
+    "husky": "^4.2.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run test"
+    }
+  }
+}

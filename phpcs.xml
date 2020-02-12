@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Coding Standards">
+
+  <!-- Pass some flags to PHPCS:
+    p flag: Show progress of the run.
+    s flag: Show sniff codes in all reports.
+    v flag: Print verbose output.
+    n flag: Do not print warnings.
+  -->
+  <arg value="psvn"/>
+
+  <!-- Only check the PHP -->
+  <arg name="extensions" value="php"/>
+
+  <!-- Check all files in defined directories and the directories below it. -->
+  <file>./wp-ssr.php</file>
+  <file>./class/</file>
+
+  <!-- Include the WordPress ruleset, with exclusions. -->
+  <rule ref="WordPress">
+
+    <!-- Indentations -->
+    <exclude name="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed" />
+    <exclude name="WordPress.WhiteSpace.PrecisionAlignment.Found" />
+    <exclude name="Generic.WhiteSpace.ScopeIndent" />
+    <exclude name="PEAR.Functions.FunctionCallSignature.Indent" />
+
+    <exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound" />
+    <exclude name="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound" />
+
+    <!-- Don't require too strict inline commenting,
+    it's a good thing to documentate, let's not make it frustrating -->
+    <exclude name="Squiz.Commenting.FunctionComment.WrongStyle" />
+    <exclude name="Squiz.Commenting.ClassComment.WrongStyle" />
+    <exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
+    <exclude name="Squiz.Commenting.InlineComment.SpacingAfter" />
+    <exclude name="Squiz.Commenting.FileComment.Missing" />
+    <exclude name="Squiz.Commenting.LongConditionClosingComment.Missing" />
+    <exclude name="Squiz.Commenting.LongConditionClosingComment.Missing" />
+    <exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
+
+    <!-- General code style related excludes -->
+    <exclude name="Squiz.PHP.DisallowMultipleAssignments.Found" />
+    <exclude name="Squiz.PHP.EmbeddedPhp.MultipleStatements" />
+    <exclude name="Squiz.PHP.EmbeddedPhp.ContentAfterOpen" />
+    <exclude name="Squiz.PHP.EmbeddedPhp.ContentBeforeEnd" />
+    <exclude name="Generic.Formatting.DisallowMultipleStatements.SameLine" />
+    <exclude name="WordPress.Arrays.ArrayDeclarationSpacing.AssociativeKeyFound" />
+    <exclude name="WordPress.Arrays.ArrayDeclarationSpacing.AssociativeArrayFound" />
+    <exclude name="Generic.Arrays.DisallowShortArraySyntax" />
+    <exclude name="Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace" />
+    <exclude name="PHPCompatibility.PHP.NewFunctionArrayDereferencing.Found" />
+    <exclude name="WordPress.WP.EnqueuedResourceParameters.MissingVersion" />
+    <exclude name="WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion" />
+
+    <!-- Translations related, not always necessary, too strict -->
+    <exclude name="WordPress.WP.I18n.MissingTranslatorsComment" />
+
+    <!-- EditorConfig makes sure this happens anyway & false positives happen with this -->
+    <exclude name="Generic.Files.EndFileNewline.NotFound" />
+
+    <!-- Many times when developing a customer case we have placeholders for SVG includes, so unnecessary error reports happen with this rule -->
+    <exclude name="Squiz.PHP.EmbeddedPhp.Empty" />
+  </rule>
+
+  <rule ref="Generic.WhiteSpace.ScopeIndent">
+    <properties>
+      <property name="indent" value="2"/>
+      <property name="exact" value="false" />
+    </properties>
+  </rule>
+
+  <!-- Verify that the text_domain is set to the desired text-domain.
+  Multiple valid text domains can be provided as a comma-delimited list. -->
+  <rule ref="WordPress.WP.I18n">
+    <properties>
+      <property name="text_domain" type="array">
+        <element value="wp-ssr" />
+      </property>
+    </properties>
+  </rule>
+
+  <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+    <properties>
+      <property name="prefixes" type="array">
+        <element value="wpssr"/>
+      </property>
+    </properties>
+  </rule>
+
+</ruleset>
