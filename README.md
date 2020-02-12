@@ -12,6 +12,12 @@ This application doesn't provide you real time server side rendering but it's su
 
 ### WordPress
 
+You can install the plugin using composer:
+
+```bash
+composer require "columbiaroad/wp-ssr:0.1.0@dev"
+```
+
 First you need to navigate to the plugin settings and fill in the required information. You need to provide an API key to be used for authenticating with the REST API. Then you need to give WordPress the Node application url what to ping for renders. Last you can define the interval when the renders expire.
 
 In the WordPress template you need to request the rendered content before initial render of the header. You can request the content of the application by using `WPSSR\Render::render` method which takes in three parameters:
