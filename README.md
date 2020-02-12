@@ -65,3 +65,4 @@ docker run -d \
 
 - [ ] Add `.env` file support for the Node application
 - [ ] Optimize for large amount of renders
+- [ ] Lock the rendering process to prevent multiple simultaneous render calls
