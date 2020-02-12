@@ -97,13 +97,16 @@ class Post_Type {
 			'show_in_admin_bar'   => false,
 			'exclude_from_search' => true,
 			'capability_type'     => 'post',
+			'capabilities'        => [
+				'create_posts' => false,
+			],
 			'map_meta_cap'        => true,
 			'hierarchical'        => false,
 			'menu_position'       => 5,
-			'rewrite'             => array( 'slug' => self::$post_slug ),
+			'rewrite'             => [ 'slug' => self::$post_slug ],
 			'query_var'           => true,
-			'supports'            => array( 'title', 'revisions' ),
-			'taxonomies'          => array(),
+			'supports'            => [ 'title', 'revisions' ],
+			'taxonomies'          => [],
 			'menu_icon'           => 'dashicons-layout',
 		);
 
