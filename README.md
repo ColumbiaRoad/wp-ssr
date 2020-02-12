@@ -56,6 +56,7 @@ One way to run the application is to use the Docker image provided:
 docker run -d \
   -e "WP_DOMAIN=https://example.com" \
   -e "API_KEY=my-api-key" \
+  -p 80:3000 \
   --restart=unless-stoppped \
   --name=wpssr \
   columbiaroadcom/wp-ssr
