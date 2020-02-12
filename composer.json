@@ -1,6 +1,6 @@
 {
   "name": "columbiaroad/wp-ssr",
-  "description": "Server-side rendering for JavScript apps inside WordPress templates.",
+  "description": "Server-side rendering for JavaScript apps inside WordPress templates.",
   "type": "wordpress-plugin",
   "homepage": "https://github.com/ColumbiaRoad/wp-ssr",
   "authors": [
