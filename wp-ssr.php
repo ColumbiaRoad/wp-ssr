@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WP SSR
- * Description: Server-side rendering for JavScript apps inside WordPress templates.
+ * Description: Server-side rendering for JavaScript apps inside WordPress templates.
  * Version: 0.1.0
  * Author: Roope Merikukka
  * Author uri: https://github.com/roopemerikukka/

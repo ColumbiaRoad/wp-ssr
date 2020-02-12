@@ -2,6 +2,9 @@
 
 namespace WPSSR;
 
+// exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+
 /**
  * REST API class.
  */
