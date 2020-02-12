@@ -1,6 +1,12 @@
 {
-  "name": "wp-ssr",
+  "name": "columbiaroad/wp-ssr",
   "description": "Server-side rendering for JavScript apps inside WordPress templates.",
+  "authors": [
+    {
+      "name": "Roope Merikukka",
+      "email": "roope.merikukka@columbiaroad.com"
+    }
+  ],
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.5",
     "wp-coding-standards/wpcs": "^2.2",
