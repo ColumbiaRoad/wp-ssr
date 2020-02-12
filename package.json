@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/roopemerikukka/wp-ssr.git"
+    "url": "git+https://github.com/ColumbiaRoad/wp-ssr.git"
   },
   "author": "Roope Merikukka",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/roopemerikukka/wp-ssr/issues"
+    "url": "https://github.com/ColumbiaRoad/wp-ssr/issues"
   },
-  "homepage": "https://github.com/roopemerikukka/wp-ssr#readme",
+  "homepage": "https://github.com/ColumbiaRoad/wp-ssr",
   "dependencies": {
     "express": "^4.17.1",
     "jsdom": "^16.1.0",
