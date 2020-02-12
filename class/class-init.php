@@ -6,7 +6,7 @@ namespace WPSSR;
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
- * Sponda Resource init class.
+ * Init class.
  */
 class Init {
 
