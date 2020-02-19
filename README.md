@@ -15,7 +15,7 @@ This application doesn't provide you real time server side rendering but it's su
 You can install the plugin using composer:
 
 ```bash
-composer require "columbiaroad/wp-ssr:0.1.0@dev"
+composer require "columbiaroad/wp-ssr:0.1.2@dev"
 ```
 
 First you need to navigate to the plugin settings and fill in the required information. You need to provide an API key to be used for authenticating with the REST API. Then you need to give WordPress the Node application url what to ping for renders. Last you can define the interval when the renders expire.
@@ -55,6 +55,7 @@ To start the Node application you need to have couple of environment variables a
 
 - `WP_DOMAIN` which points to the root of your WordPress installation
 - `API_KEY` is the same API key that you provided in the plugin settings page
+- `NODE_ENV` to define the Node environment. This is used in example to ignore puppeteer HTTPS errors
 
 One way to run the application is to use the Docker image provided:
 
@@ -62,6 +63,7 @@ One way to run the application is to use the Docker image provided:
 docker run -d \
   -e "WP_DOMAIN=https://example.com" \
   -e "API_KEY=my-api-key" \
+  -e "NODE_ENV=production" \
   -p 80:3000 \
   --restart=unless-stoppped \
   --name=wpssr \

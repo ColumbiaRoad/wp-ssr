@@ -10,16 +10,16 @@ RUN apt-get update && apt-get install -y wget --no-install-recommends \
   && apt-get purge --auto-remove -y curl \
   && rm -rf /src/*.deb
 
-
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
 RUN chmod +x /usr/local/bin/dumb-init
 
 WORKDIR /app
+
+COPY package*.json .
+RUN npm install --only=production
 COPY . .
 
-RUN npm install
 EXPOSE 3000
-
 USER node
 
 ENTRYPOINT ["dumb-init", "--"]
