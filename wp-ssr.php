@@ -3,10 +3,11 @@
  * Plugin Name: WP SSR
  * Plugin URI:  https://github.com/ColumbiaRoad/wp-ssr
  * Description: Server-side rendering for JavaScript apps inside WordPress templates.
- * Version:     0.1.2
+ * Version:     1.0.0
  * Author:      Roope Merikukka
  * Author uri:  https://github.com/roopemerikukka/
  * Text Domain: wp-ssr
+ * License:     GPLv3
  */
 
 namespace WPSSR;

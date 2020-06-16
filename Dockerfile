@@ -15,7 +15,7 @@ RUN chmod +x /usr/local/bin/dumb-init
 
 WORKDIR /app
 
-COPY package*.json .
+COPY package*.json /app/
 RUN npm install --only=production
 COPY . .
 
