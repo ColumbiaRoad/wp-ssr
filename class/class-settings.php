@@ -79,6 +79,16 @@ class Settings {
 			[ 'label_for' => 'wpssr_options_nodeapp_url' ]
 		);
 
+		// Node process ping url.
+		add_settings_field(
+			'wpssr_options_allowed_params',
+			__( 'Allowed url params', 'wp-ssr' ),
+			[ $this, 'allowed_params_field' ],
+			'wpssr',
+			'wpssr_options_general',
+			[ 'label_for' => 'wpssr_options_allowed_params' ]
+		);
+
 		// Render interval.
 		add_settings_field(
 			'wpssr_options_render_interval',
@@ -109,6 +119,27 @@ class Settings {
 	public function nodeapp_url_field( array $args ) {
 		$url = self::get_nodeapp_url();
 		?>
+		<input
+			id="<?php echo esc_attr( $args['label_for'] ); ?>"
+			class="regular-text"
+			name="wpssr_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
+			value="<?php echo esc_attr( $url ); ?>"
+			type="text"
+			autocomplete="off"
+		/>
+		<?php
+	}
+
+	/**
+	 * Callback for the allowed params field markup.
+	 *
+	 * @param array $args Arguments.
+	 * @return void
+	 */
+	public function allowed_params_field( array $args ) {
+		$url = self::get_allowed_params();
+		?>
+		<p>Give the allowed url parameters, separated by comma. Leave empty to allow all.</p>
 		<input
 			id="<?php echo esc_attr( $args['label_for'] ); ?>"
 			class="regular-text"
@@ -202,6 +233,17 @@ class Settings {
 	public static function get_api_key() : string {
 		$options = get_option( 'wpssr_options' );
 		return $options['wpssr_options_authentication_api_key'] ?? '';
+	}
+
+
+	/**
+	 * Get the allowed url params
+	 *
+	 * @return string
+	 */
+	public static function get_allowed_params() : string {
+		$options = get_option( 'wpssr_options' );
+		return $options['wpssr_options_allowed_params'] ?? '';
 	}
 
 	/**
