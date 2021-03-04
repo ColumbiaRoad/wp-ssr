@@ -76,10 +76,10 @@ class Render {
 
 		$posts = $query->get_posts();
 
-		// Request renderer if its not the one doing request.
-		if ( ! self::is_ssr_request() ) {
-			self::request_renderer();
-		}
+		// // Request renderer if its not the one doing request.
+		// if ( ! self::is_ssr_request() ) {
+		// 	self::request_renderer();
+		// }
 
 		if ( ! $posts ) {
 			// Save the url to db without html
