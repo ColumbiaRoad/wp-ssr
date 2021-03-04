@@ -76,10 +76,12 @@ class Render {
 
 		$posts = $query->get_posts();
 
-		// // Request renderer if its not the one doing request.
-		// if ( ! self::is_ssr_request() ) {
-		// 	self::request_renderer();
-		// }
+		/*
+		// Request renderer if its not the one doing request.
+		if ( ! self::is_ssr_request() ) {
+			self::request_renderer();
+		}
+		*/
 
 		if ( ! $posts ) {
 			// Save the url to db without html
@@ -91,6 +93,10 @@ class Render {
 
 		$post = $posts[0];
 		$html = Post_Type::get_html( $posts[0]->ID );
+
+		if ( ! self::is_ssr_request() ) {
+			Post_Type::set_last_visited( $posts[0]->ID );
+		}
 
 		// Return null if there is no html.
 		if ( empty( $html ) || self::is_ssr_request() ) {

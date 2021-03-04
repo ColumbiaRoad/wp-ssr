@@ -139,11 +139,13 @@ class Post_Type {
 		$url_field              = $this->get_url_field_html( $post );
 		$render_field           = $this->get_render_field_html( $post );
 		$last_modified_field     = $this->get_last_modified_field_html( $post );
+		$last_visited_field     = $this->get_last_visited_field_html( $post );
 		$app_selector_field     = $this->get_app_selector_field_html( $post );
 		$waitfor_selector_field = $this->get_waitfor_selector_field_html( $post );
 		?>
 		<fieldset>
 			<?php echo $last_modified_field; // phpcs:ignore ?>
+			<?php echo $last_visited_field; // phpcs:ignore ?>
 			<?php echo $app_selector_field; // phpcs:ignore ?>
 			<?php echo $waitfor_selector_field; // phpcs:ignore ?>
 			<?php echo $url_field; // phpcs:ignore ?>
@@ -237,6 +239,28 @@ class Post_Type {
 		return $result;
 	}
 
+		/**
+		 * Get the markup for last visited field.
+		 *
+		 * @param \WP_Post $post Current post object.
+		 * @return string
+		 */
+	public function get_last_visited_field_html( \WP_Post $post ) : string {
+		$last_visited = self::get_last_visited( $post->ID );
+		$date = gmdate( 'H:i d.m.Y', (int) $last_visited );
+		\ob_start();
+		?>
+		<p>
+			<label for="wp_react_ssr_last_visited"><?php echo esc_html_x( 'Last visited', 'label', 'wp-ssr' ); ?></label>
+		</p>
+		<p>
+			<input class="large-text" id="wp_react_ssr_last_visited" type="text" value="<?php echo esc_attr( $date ); ?>" readonly />
+		</p>
+		<?php
+		$result = \ob_get_clean();
+		return $result;
+	}
+
 	/**
 	 * Get the markup for render field markup.
 	 *
@@ -281,6 +305,7 @@ class Post_Type {
 	public static function set_url( int $post_id, string $value ) {
 		update_post_meta( $post_id, 'wp_react_ssr_url', $value );
 		self::set_last_modified( $post_id );
+		self::set_last_visited( $post_id );
 	}
 
 	/**
@@ -372,5 +397,27 @@ class Post_Type {
 	private static function set_last_modified( int $post_id ) {
 		update_post_meta( $post_id, 'wp_react_ssr_last_modified', time() );
 	}
+
+	/**
+	 * Get last modified timestamp.
+	 *
+	 * @param integer $post_id Post ID.
+	 * @return integer
+	 */
+	public static function get_last_visited( int $post_id ) : int {
+		$last_visited = get_post_meta( $post_id, 'wp_react_ssr_last_visited', true );
+		return (int) $last_visited;
+	}
+
+	/**
+	 * Set the last modified time.
+	 *
+	 * @param integer $post_id Current post id.
+	 * @return void
+	 */
+	public static function set_last_visited( int $post_id ) {
+		update_post_meta( $post_id, 'wp_react_ssr_last_visited', time() );
+	}
+
 
 } // Class ends
