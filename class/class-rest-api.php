@@ -95,7 +95,7 @@ class REST_API {
 		$query = new \WP_Query(
 			[
 				'post_type'              => Post_Type::get_post_type(),
-				'posts_per_page'         => 500,
+				'posts_per_page'         => 5000,
 				'no_found_rows'          => true,
 				'update_post_term_cache' => false,
 				'update_post_meta_cache' => false,
@@ -111,6 +111,7 @@ class REST_API {
 
 		$renders = array_map( [ $this, 'map_post_to_render' ], $posts );
 
+		$renders = array_filter( $renders, [ $this, 'delete_old_renders' ] );
 		$renders = array_filter( $renders, [ $this, 'filter_renders' ] );
 
 		return $renders;
@@ -129,9 +130,26 @@ class REST_API {
 			'url'             => Post_Type::get_url( $post_id ),
 			'html'            => Post_Type::get_html( $post_id ),
 			'last_modified'   => Post_Type::get_last_modified( $post_id ),
+			'last_visited'    => Post_Type::get_last_visited( $post_id ),
 			'appSelector'     => Post_Type::get_app_selector( $post_id ),
 			'waitForSelector' => Post_Type::get_waitfor_selector( $post_id ),
 		];
+	}
+
+	/**
+	 * Delete old renders
+	 *
+	 * @param array $item Item to check against.
+	 * @return boolean
+	 */
+	public function delete_old_renders( array $item ) : bool {
+		$interval_days = Settings::get_delete_timeout();
+		$interval_seconds = $interval_days * 24 * 60 * 60;
+		if ( ( $item['last_visited'] + $interval_seconds ) <= time() ) {
+			wp_delete_post( $item['id'] );
+			return false;
+		}
+		return true;
 	}
 
 	/**

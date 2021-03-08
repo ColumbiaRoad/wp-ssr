@@ -79,6 +79,16 @@ class Settings {
 			[ 'label_for' => 'wpssr_options_nodeapp_url' ]
 		);
 
+		// Node process ping url.
+		add_settings_field(
+			'wpssr_options_allowed_params',
+			__( 'Allowed url params', 'wp-ssr' ),
+			[ $this, 'allowed_params_field' ],
+			'wpssr',
+			'wpssr_options_general',
+			[ 'label_for' => 'wpssr_options_allowed_params' ]
+		);
+
 		// Render interval.
 		add_settings_field(
 			'wpssr_options_render_interval',
@@ -88,6 +98,16 @@ class Settings {
 			'wpssr_options_general',
 			[ 'label_for' => 'wpssr_options_render_interval' ]
 		);
+
+			// Molded render delete time.
+			add_settings_field(
+				'wpssr_options_delete_timeout',
+				__( 'Delete timeout', 'wp-ssr' ),
+				[ $this, 'delete_timeout_field' ],
+				'wpssr',
+				'wpssr_options_general',
+				[ 'label_for' => 'wpssr_options_delete_timeout' ]
+			);
 	}
 
 	/**
@@ -99,6 +119,27 @@ class Settings {
 	public function nodeapp_url_field( array $args ) {
 		$url = self::get_nodeapp_url();
 		?>
+		<input
+			id="<?php echo esc_attr( $args['label_for'] ); ?>"
+			class="regular-text"
+			name="wpssr_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
+			value="<?php echo esc_attr( $url ); ?>"
+			type="text"
+			autocomplete="off"
+		/>
+		<?php
+	}
+
+	/**
+	 * Callback for the allowed params field markup.
+	 *
+	 * @param array $args Arguments.
+	 * @return void
+	 */
+	public function allowed_params_field( array $args ) {
+		$url = self::get_allowed_params();
+		?>
+		<p>Give the allowed url parameters, separated by comma. Leave empty to allow all.</p>
 		<input
 			id="<?php echo esc_attr( $args['label_for'] ); ?>"
 			class="regular-text"
@@ -152,6 +193,28 @@ class Settings {
 		<?php
 	}
 
+		/**
+		 * Callback function for the render interval field markup.
+		 *
+		 * @param array $args Arguments.
+		 * @return void
+		 */
+	public function delete_timeout_field( array $args ) {
+		$timeout = self::get_delete_timeout();
+		?>
+		<p>Give the expiry time of not visited posts in days.</p>
+		<input
+			id="<?php echo esc_attr( $args['label_for'] ); ?>"
+			class="regular-small"
+			name="wpssr_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
+			value="<?php echo esc_attr( $timeout ); ?>"
+			min="0"
+			type="number"
+			autocomplete="off"
+		/>
+		<?php
+	}
+
 	/**
 	 * Get the Node app url option value.
 	 *
@@ -172,14 +235,37 @@ class Settings {
 		return $options['wpssr_options_authentication_api_key'] ?? '';
 	}
 
+
+	/**
+	 * Get the allowed url params
+	 *
+	 * @return string
+	 */
+	public static function get_allowed_params() : string {
+		$options = get_option( 'wpssr_options' );
+		return $options['wpssr_options_allowed_params'] ?? '';
+	}
+
 	/**
 	 * Get the render interval.
 	 *
 	 * @return integer
 	 */
 	public static function get_render_interval() : int {
-		$options = get_option( 'wpssr_options' );
+		$options  = get_option( 'wpssr_options' );
 		$interval = $options['wpssr_options_render_interval'] ?? 24;
+		return (int) $interval;
+	}
+
+
+	/**
+	 * Get the render interval.
+	 *
+	 * @return integer
+	 */
+	public static function get_delete_timeout() : int {
+		$options  = get_option( 'wpssr_options' );
+		$interval = $options['wpssr_options_delete_timeout'] ?? 30;
 		return (int) $interval;
 	}
 
@@ -209,7 +295,7 @@ class Settings {
 	public function settings_page_content() {
 		if ( ! current_user_can( 'manage_options' ) ) { return; }
 
-		// wordpress will add the "settings-updated" $_GET parameter to the url
+		// WordPress will add the "settings-updated" $_GET parameter to the url
 		if ( isset( $_GET['settings-updated'] ) ) {
 			add_settings_error( 'wpssr_messages', 'wpssr_message', __( 'Settings Saved', 'wp-ssr' ), 'updated' );
 		}

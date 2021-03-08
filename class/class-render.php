@@ -48,6 +48,32 @@ class Render {
 		return 'ssr' === $ssr_header;
 	}
 
+		/**
+		 * Remove unwanted url parameters from the url according to settings
+		 *
+		 * @param string $url Url to remove params from.
+		 * @return string
+		 */
+	public static function clear_url_params( string $url ) : string {
+		if ( Settings::get_allowed_params() === '' ) { return $url;}
+
+		$allowed_params = explode( ',', Settings::get_allowed_params() );
+		$parsed_url = parse_url( $url );
+		$params = [];
+
+		if ( array_key_exists( 'query', $parsed_url ) ) {
+			foreach ( explode( '&', $parsed_url['query'] ) as $param ) {
+				[$key] = explode( '=', $param, 2 );
+				if ( in_array( $key, $allowed_params ) ) { array_push( $params, $param );
+			}
+			}
+			$params = '?' . implode( '&', $params );
+		}
+
+		return $parsed_url['scheme'] . '://' . $parsed_url['host'] . $parsed_url['path'] . $params;
+	}
+
+
 	/**
 	 * Function returns rendered html of the application
 	 * if there is one and requests new renders.
@@ -58,6 +84,7 @@ class Render {
 	 * @return string|null
 	 */
 	public static function render( string $url, string $app_selector = '', string $waitfor_selector = '' ) {
+		$url = self::clear_url_params( $url );
 		$query = new \WP_Query(
 			[
 				'post_type'      => Post_Type::get_post_type(),
@@ -76,10 +103,12 @@ class Render {
 
 		$posts = $query->get_posts();
 
+		/*
 		// Request renderer if its not the one doing request.
 		if ( ! self::is_ssr_request() ) {
 			self::request_renderer();
 		}
+		*/
 
 		if ( ! $posts ) {
 			// Save the url to db without html
@@ -91,6 +120,10 @@ class Render {
 
 		$post = $posts[0];
 		$html = Post_Type::get_html( $posts[0]->ID );
+
+		if ( ! self::is_ssr_request() ) {
+			Post_Type::set_last_visited( $posts[0]->ID );
+		}
 
 		// Return null if there is no html.
 		if ( empty( $html ) || self::is_ssr_request() ) {

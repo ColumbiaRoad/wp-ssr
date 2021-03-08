@@ -56,6 +56,7 @@ To start the Node application you need to have couple of environment variables a
 - `WP_DOMAIN` which points to the root of your WordPress installation
 - `API_KEY` is the same API key that you provided in the plugin settings page
 - `NODE_ENV` to define the Node environment. This is used in example to ignore puppeteer HTTPS errors
+- `SCHEDULE` to define the schedule for rendering cron job
 
 One way to run the application is to use the Docker image provided:
 
@@ -64,6 +65,7 @@ docker run -d \
   -e "WP_DOMAIN=https://example.com" \
   -e "API_KEY=my-api-key" \
   -e "NODE_ENV=production" \
+  -e "SCHEDULE=*/15 * * * *" \
   -p 80:3000 \
   --restart=unless-stoppped \
   --name=wpssr \
