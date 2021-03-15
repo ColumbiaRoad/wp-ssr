@@ -59,7 +59,7 @@ class Render {
 
 		$allowed_params = explode( ',', Settings::get_allowed_params() );
 		$parsed_url = parse_url( $url );
-		$params = [];
+		$params = '';
 
 		if ( array_key_exists( 'query', $parsed_url ) ) {
 			foreach ( explode( '&', $parsed_url['query'] ) as $param ) {
