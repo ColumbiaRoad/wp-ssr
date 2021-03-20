@@ -138,7 +138,7 @@ class Post_Type {
 	public function fields_html( \WP_Post $post ) {
 		$url_field              = $this->get_url_field_html( $post );
 		$render_field           = $this->get_render_field_html( $post );
-		$last_modified_field     = $this->get_last_modified_field_html( $post );
+		$last_modified_field    = $this->get_last_modified_field_html( $post );
 		$last_visited_field     = $this->get_last_visited_field_html( $post );
 		$app_selector_field     = $this->get_app_selector_field_html( $post );
 		$waitfor_selector_field = $this->get_waitfor_selector_field_html( $post );
@@ -221,11 +221,11 @@ class Post_Type {
 	 * Get the markup for last modified field.
 	 *
 	 * @param \WP_Post $post Current post object.
-	 * @return string
+	 * @return strin
 	 */
 	public function get_last_modified_field_html( \WP_Post $post ) : string {
 		$last_modified = self::get_last_modified( $post->ID );
-		$date = gmdate( 'H:i d.m.Y', (int) $last_modified );
+		$date          = gmdate( 'H:i d.m.Y', (int) $last_modified );
 		\ob_start();
 		?>
 		<p>
@@ -247,7 +247,7 @@ class Post_Type {
 		 */
 	public function get_last_visited_field_html( \WP_Post $post ) : string {
 		$last_visited = self::get_last_visited( $post->ID );
-		$date = gmdate( 'H:i d.m.Y', (int) $last_visited );
+		$date         = gmdate( 'H:i d.m.Y', (int) $last_visited );
 		\ob_start();
 		?>
 		<p>
