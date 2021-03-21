@@ -64,9 +64,10 @@ public static function clear_url_params( string $url ) : string {
 	if ( array_key_exists( 'query', $parsed_url ) ) {
 		$params = [];
 	  foreach ( explode( '&', $parsed_url['query'] ) as $param ) {
-		[$key] = explode( '=', $param, 2 );
-		if ( in_array( $key, $allowed_params, true ) ) { array_push( $params, $param );
-		}
+			[$key] = explode( '=', $param, 2 );
+			if ( in_array( $key, $allowed_params, true ) ) {
+				array_push( $params, $param );
+			}
 	  }
 		$params = '?' . implode( '&', $params );
 	}
