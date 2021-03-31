@@ -1,6 +1,6 @@
 {
   "name": "wp-ssr",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Server-side rendering for JavScript apps inside WordPress templates.",
   "main": "server.js",
   "scripts": {
