@@ -114,7 +114,7 @@ class REST_API {
 		$renders = array_filter( $renders, [ $this, 'delete_old_renders' ] );
 		$renders = array_filter( $renders, [ $this, 'filter_renders' ] );
 
-		return $renders;
+		return array_values( $renders );
 	}
 
 	/**
