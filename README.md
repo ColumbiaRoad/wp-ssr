@@ -72,6 +72,16 @@ docker run -d \
   columbiaroadcom/wp-ssr
 ```
 
+## Publishing package
+The composer package is automatically published to `columbiaroad/wp-ssr` when a github release is made.
+
+To publish to dockerhub you need access to the repository there. Publishing is done as follows:
+```bash
+docker build . --tag columbiaroadcom/wp-ssr:<tag>
+docker push columbiaroadcom/wp-ssr:<tag>
+```
+
+
 ## TODO
 
 - [ ] Add `.env` file support for the Node application
